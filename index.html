@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="img/ball.png" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+	<title>Игра</title>
+</head>
+
+<body>
+	<!------------------wrapper-------------------->
+	<div class="pop_up_container">
+		<div class="pop_up_body">
+			<div class="pop_up_title">ПРАВИЛА ИГРЫ</div>
+			<p>
+				Игра расчитана на 1 - 5 человек.
+			</p>
+			<p>
+				Каждый игрок выбирает себе цвет на панеле справа и вписывает напротив него свой псевдоним. Когда все игроки
+				готовы, следует нажать кнопку "Заполнить", после чего введенные псевдонимы попадут на верхнюю панель
+				"Прогресс игроков".
+			</p>
+			<p>
+				Каждый игрок ходит по одному разу в порядке очереди. Игрок жмет на мяч, чтобы совержить удар по воротам.
+				За попадание игрок получает одно очко. За попадание в девятку игрок получает три очка.
+			</p>
+			<p>
+				С каждым попадание по воротам прогресс игрока увеличивается. Побеждает тот, чья шкала прогресса первой
+				достигнет цели "ПРИЗ".
+			</p>
+
+			<div class="pop_up_close">
+				<img src="img/close.png" alt="close">
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
+		<!------------------header--------------------->
+		<header class="header">
+			<div class="header__progress">
+				<div class="block__gamers">
+					<h3>Прогресс игроков</h3>
+					<ul class="gamers">
+						<li data-color='#cc0000'></li>
+						<li data-color='#ffff00'></li>
+						<li data-color='#0066ff'></li>
+						<li data-color='#009900'></li>
+						<li data-color='#ff6600'></li>
+					</ul>
+				</div>
+				<div class="prize">
+					<h3>ПРИЗ</h3>
+					<div class="prize__item"></div>
+				</div>
+			</div>
+			<button data-tooltip="Введите псевдоним" class="start">НАЧАТЬ ИГРУ!</button>
+		</header>
+		<!------------------header--------------------->
+		<!-------------------main---------------------->
+		<main class="main">
+			<!---------------content------------------>
+			<section class="content">
+				<img src="img/field.jpg" alt="ворота" class="field">
+				<div class="gates">
+					<div class="left-angle"></div>
+					<div class="right-angle"></div>
+				</div>
+				<img data-tooltip="Введите псевдоним и нажмите 'НАЧАТЬ ИГРУ'" class="ball" src="img/ball.png" alt="мяч">
+			</section>
+			<!---------------content------------------>
+			<!---------------sidebar------------------>
+			<aside class="sidebar">
+				<div class="gamers__info">
+					<form action="#">
+						<ul class="players">
+							<li>
+								<div class="color"></div>
+								<input type="text" placeholder="Игрок №1">
+							</li>
+							<li>
+								<div class="color"></div>
+								<input type="text" placeholder="Игрок №2">
+							</li>
+							<li>
+								<div class="color"></div>
+								<input type="text" placeholder="Игрок №3">
+							</li>
+							<li>
+								<div class="color"></div>
+								<input type="text" placeholder="Игрок №4">
+							</li>
+							<li>
+								<div class="color"></div>
+								<input type="text" placeholder="Игрок №5">
+							</li>
+						</ul>
+						<div class="buttons">
+							<button class="button clear">Очистить форму
+							</button>
+							<button data-tooltip="Введите псевдоним и нажмите 'Заполнить'"
+								class="button fill">Заполнить</button>
+						</div>
+					</form>
+				</div>
+				<button data-tooltip="Вы не ударили" class="next-player">Передать ход</button>
+			</aside>
+			<!---------------sidebar------------------>
+		</main>
+		<!-------------------main---------------------->
+	</div>
+	<!-------------------wrapper--------------------->
+	<script src="js/script.js"></script>
+</body>
+
+</html>
