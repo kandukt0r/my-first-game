@@ -76,8 +76,9 @@ h1, h2, h3, h4, h5, h6 {
 
 
 body {
-	font-family: 'Balsamiq Sans', cursive;
+	font-family:'Comfortaa', cursive;;
 	font-size: 16px;
+	background-color: #f6f7f8;
 }
 .pop_up_container {
 	font-family: 'Nunito', sans-serif;
@@ -86,14 +87,16 @@ body {
 	width: 100%;
 	z-index: 2;
 	background: transparent;
-	position: absolute;
+	position: fixed;
 	padding: 50px 200px;
-	transform: translateY(-100%);
-	transition: 0.7s ease-out;
+	transform: translateY(-20%) scale(0%);
+	transition: 0.3s cubic-bezier(0.61, 1, 0.88, 1);
+	opacity: 0;
 }
 .pop_up_container.active {
-	transform: translateY(0%);
+	transform: translateY(0%) scale(100%);
 	background: rgba(0, 0, 0, 0.8);
+	opacity: 1;
 }
 .pop_up_body {
 	background: #ffcc99;
@@ -102,7 +105,7 @@ body {
 	border-radius: 5px;
 	box-shadow: 0 0 15px 1px black;
 	position: relative;
-	font-size: 45px;
+	font-size: 1.9vw;
 }
 .pop_up_body p {
 	margin: 0 0 30px 0;
@@ -112,21 +115,21 @@ body {
 	text-align: center;
 	margin: 0 0 20px 0;
 }
-.pop_up_close {
+.pop_up_cross {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 	cursor: pointer;
 	padding: 5px;
 }
-.pop_up_close img{
+.pop_up_cross img{
 	height: 20px;
 }
-.pop_up_close img:hover {
+.pop_up_cross img:hover {
 	filter: invert(1);
 }
+
 .wrapper {
-	background-color: #e0e9ed;
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -160,19 +163,20 @@ body {
 	-moz-user-select: none; 
 }
 .gamers > li {
-	height: 18px;
+	line-height: 140%;
+	height: 20px;
 	width: 100%;
 	margin-bottom: 2px;
 	border-radius: 3px;
 	box-shadow: 0 0 2px 0 gray;
 	padding-left: 5px;
 	color: white;
+	transition: 1s ease-out;
 }
 .gamers > li:nth-child(3n+2){
 	color: black;
 }
 .highlite {
-	transform: scale(1.02);
 	animation: animation-shadow 1.5s ease-in-out infinite;
 }
 @keyframes animation-shadow {
@@ -203,25 +207,20 @@ body {
 	margin:10px 10px 10px 0;
 	border-radius: 5px;
 	font-size: 2em;
-	box-shadow: 0 6px 16px 0 rgb(38 55 70 / 8%), 0 2px 1px gray;
+	box-shadow: 0 6px 10px 0 rgb(38 55 70 / 30%);
 	transition: 0.2s;
 	top: 0;
 	position: relative;
-	border: 2px solid yellow;
-	color: #2596be;
-	text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
-               0px -5px 35px rgba(255,255,255,0.3);
+	background: #ffdd2d;
+	color: rgba(0,0,0,.8);
 	-webkit-user-select: none;
 	-moz-user-select: none;
-
 }
 .start:not([disabled]):hover {
-	color:#0a4f88;
 	background: #ababa9;
 }
 .start:not([disabled]):active {
-	top:2px;
-	box-shadow: 0 6px 16px 0 rgb(38 55 70 / 8%);
+	transform: scale(0.97);
 	background:#999999;
 	transition: 0.1s;
 }
@@ -244,7 +243,7 @@ body {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	border-radius: 5px;
-	box-shadow: 0 6px 10px 0 rgb(38 55 70 / 30%);
+	box-shadow: 0 4px 10px 0 rgb(38 55 70 / 30%);
 }
 .field {
 	position: absolute;
@@ -310,21 +309,15 @@ body {
 		top: 23.1%;
 	}
 }
-@media (max-height:568px) {
+@media (max-height:570px) {
 	.content {
 		padding:0 0 45% 0 ;
 	}
 	.gates {
 		top: 19.9%;
 	}
-	.pop_up_body {
-		font-size: 25px;
-	}
 	.pop_up_body p {
 		margin: 0 0 20px 0;
-	}
-	.pop_up_title {
-		font-size: 35px;
 	}
 }
 /*----------------FIELD-----------------*/
@@ -334,24 +327,25 @@ body {
 	margin:2px 10px 0 0;
 	border-radius: 5px;
 	background-color: #fff;
-	box-shadow: 0 3px 10px 0 rgb(38 55 70 / 30%);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	box-shadow: 0 4px 10px 0 rgb(38 55 70 / 30%);
 }
 .players > li {
 	display: flex;
 	margin: 10px;
 	align-items: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 .players > li > div {
-	width: 30px;
-	height: 30px;
+	width: 40px;
+	height: 40px;
 	border-radius: 2px;
-	box-shadow: 0 0 2px 0 gray;
 }
 .players > li > input {
-	height: 30px;
+	height: 40px;
 	width: 200px;
 	border-radius: 2px;
 	border: 1px solid lightgray;
@@ -372,7 +366,7 @@ body {
 	color:transparent; 
 }
 
-form {
+.form {
 	display: flex;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -382,11 +376,12 @@ form {
 	flex-direction: column;
 }
 .button {
-	height: 30px;
+	height: 40px;
 	margin: 10px 10px 0 0;
-	width: 150px;
+	width: 170px;
 	border-radius: 2px;
-	box-shadow: 0 0 2px 0px gray;
+	background: #ffdd2d;
+	color: rgba(0,0,0,.8);;
 	font-size: 15px;
 	transition: 0.2s;
 	-webkit-user-select: none;
@@ -396,7 +391,8 @@ form {
 	margin: 10px;
 	height: 40px;
 	border-radius: 2px;
-	box-shadow: 0 0 2px 0px gray;
+	background: #ffdd2d;
+	color: rgba(0,0,0,.8);
 	font-size: 15px;
 	transition: 0.2s;
 	-webkit-user-select: none;
@@ -408,7 +404,7 @@ form {
 .button:not([disabled]):active,.next-player:active {
 	background:#999999;
 	transition: 0.1s;
-	transform: scale(0.97);
+	transform: scale(0.99);
 }
 @media (max-width: 1410px) {
 	.players > li > input {

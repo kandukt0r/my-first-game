@@ -13,7 +13,7 @@ const $gate = document.querySelector('.gates')
 const $leftAngle = document.querySelector('.left-angle')
 const $rightAngle = document.querySelector('.right-angle')
 const $popUp = document.querySelector('.pop_up_container')
-const $closePopUp = document.querySelector('.pop_up_close')
+const $closePopUp = document.querySelector('.pop_up_cross')
 
 let gameStarted // button 'startButton' not pressed
 let formReady // button 'fillButton' not pressed
@@ -26,23 +26,23 @@ let turn // need for pass move
 //players data (данные игроков)--------------------------------------
 const firstUser = {
 	name: '',
-	count: 0,
+	count: 100,
 }
 const secondUser = {
 	name: '',
-	count: 0,
+	count: 100,
 }
 const thirdUser = {
 	name: '',
-	count: 0,
+	count: 100,
 }
 const fourthUser = {
 	name: '',
-	count: 0,
+	count: 100,
 }
 const fifthUser = {
 	name: '',
-	count: 0,
+	count: 100,
 }
 const dataUsers = [firstUser, secondUser, thirdUser, fourthUser, fifthUser]
 
@@ -96,9 +96,14 @@ document.addEventListener('mouseout', function () {
 // tooltip (подсказка)-----------------------------------------------
 
 // pop up (всплывающее окно)-----------------------------------------
-delay(600).then(() => $popUp.classList.add('active'))
-$closePopUp.addEventListener('click', function() {
-	$popUp.hidden = true
+delay(1000).then(() => $popUp.classList.add('active'))
+document.addEventListener('click', function (e) {
+	if (e.target.closest('.pop_up_body')) return
+	$popUp.classList.remove('active')
+})
+
+$closePopUp.addEventListener('click', function () {
+	$popUp.classList.remove('active')
 })
 // pop up (всплывающее окно)-----------------------------------------
 
@@ -248,8 +253,8 @@ function ballFly() {
 	if (!gameStarted) return
 	if (this.style.top !== '90%') return
 	this.classList.add('ballfly')
-	this.style.top = randomCoordsTop(10, 55) + '%'
-	this.style.left = randomCoordsLeft(20, 80) + '%'
+	this.style.top = randomCoordsTop(15, 55) + '%'
+	this.style.left = randomCoordsLeft(25, 75) + '%'
 	pass = true
 	delay(650).then(() => checkCoordsForGoal($ball, $gate, $leftAngle, $rightAngle))
 }
@@ -266,18 +271,49 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 		if (cBall.left > cLeftAngle.left && cBall.top > cLeftAngle.top
 			&& ((cBall.left + ball.offsetWidth) < (cLeftAngle.left + leftAngle.offsetWidth))
 			&& ((cBall.top + ball.offsetHeight) < (cLeftAngle.top + leftAngle.offsetHeight))) {
-			alert('Левая девятка')
+			for (let i = 0; i < dataUsers.length; i++) {
+				if ($gamersLinesColor[i].classList.contains('highlite')) {
+					dataUsers[i].count += 40
+					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
+					if (dataUsers[i].count >= 400) {
+						showPrize(dataUsers[i].name)
+					}
+				}
+			}
+			console.log('Левая девятка')
 		}
 		else if (cBall.left > cRightAngle.left && cBall.top > cRightAngle.top
 			&& ((cBall.left + ball.offsetWidth) < (cRightAngle.left + rightAngle.offsetWidth))
 			&& ((cBall.top + ball.offsetHeight) < (cRightAngle.top + rightAngle.offsetHeight))) {
-			alert('Правая девятка')
+			for (let i = 0; i < dataUsers.length; i++) {
+				if ($gamersLinesColor[i].classList.contains('highlite')) {
+					dataUsers[i].count += 40
+					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
+					if (dataUsers[i].count >= 400) {
+						showPrize(dataUsers[i].name)
+					}
+				}
+			}
+			console.log('Правая девятка')
 		}
-		else alert('Goal')
+		else {
+			for (let i = 0; i < dataUsers.length; i++) {
+				if ($gamersLinesColor[i].classList.contains('highlite')) {
+					dataUsers[i].count += 20
+					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
+					if (dataUsers[i].count >= 400) {
+						showPrize(dataUsers[i].name)
+					}
+				}
+			}
+			console.log('goal')
+		}
 	}
 }
 
-
+function showPrize(winer) {
+	alert(`${winer} win`)
+}
 // random shot in gates (рандомный удар по воротам)------------------
 
 // pass the move (передать ход)--------------------------------------

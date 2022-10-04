@@ -9,10 +9,10 @@
 	<link rel="shortcut icon" href="img/ball.png" type="image/x-icon">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
 	<title>Игра</title>
 </head>
 
@@ -20,7 +20,7 @@
 	<!------------------wrapper-------------------->
 	<div class="pop_up_container">
 		<div class="pop_up_body">
-			<div class="pop_up_title">ПРАВИЛА ИГРЫ</div>
+			<div class="pop_up_title">Правила игры</div>
 			<p>
 				Игра расчитана на 1 - 5 человек.
 			</p>
@@ -38,8 +38,8 @@
 				достигнет цели "ПРИЗ".
 			</p>
 
-			<div class="pop_up_close">
-				<img src="img/close.png" alt="close">
+			<div class="pop_up_cross">
+				<img src="img/close.png" alt="cross">
 			</div>
 		</div>
 	</div>
@@ -51,18 +51,18 @@
 					<h3>Прогресс игроков</h3>
 					<ul class="gamers">
 						<li data-color='#cc0000'></li>
-						<li data-color='#ffff00'></li>
+						<li data-color='#ffdd2d'></li>
 						<li data-color='#0066ff'></li>
 						<li data-color='#009900'></li>
 						<li data-color='#ff6600'></li>
 					</ul>
 				</div>
 				<div class="prize">
-					<h3>ПРИЗ</h3>
+					<h3>Приз</h3>
 					<div class="prize__item"></div>
 				</div>
 			</div>
-			<button data-tooltip="Введите псевдоним" class="start">НАЧАТЬ ИГРУ!</button>
+			<button data-tooltip="Введите псевдоним" class="start">Начать игру</button>
 		</header>
 		<!------------------header--------------------->
 		<!-------------------main---------------------->
@@ -80,7 +80,7 @@
 			<!---------------sidebar------------------>
 			<aside class="sidebar">
 				<div class="gamers__info">
-					<form action="#">
+					<div class="form">
 						<ul class="players">
 							<li>
 								<div class="color"></div>
@@ -109,7 +109,7 @@
 							<button data-tooltip="Введите псевдоним и нажмите 'Заполнить'"
 								class="button fill">Заполнить</button>
 						</div>
-					</form>
+					</div>
 				</div>
 				<button data-tooltip="Вы не ударили" class="next-player">Передать ход</button>
 			</aside>
