@@ -14,6 +14,7 @@ const $leftAngle = document.querySelector('.left-angle')
 const $rightAngle = document.querySelector('.right-angle')
 const $popUp = document.querySelector('.pop_up_container')
 const $closePopUp = document.querySelector('.pop_up_cross')
+const $prize = document.querySelector('.prize')
 
 let gameStarted // button 'startButton' not pressed
 let formReady // button 'fillButton' not pressed
@@ -264,6 +265,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 	const cGate = gate.getBoundingClientRect()
 	const cLeftAngle = leftAngle.getBoundingClientRect()
 	const cRightAngle = rightAngle.getBoundingClientRect()
+	const coordsPrize = $prize.getBoundingClientRect()
 
 	if (cBall.left > cGate.left && cBall.top > cGate.top
 		&& (cBall.left + ball.offsetWidth) < (cGate.left + gate.offsetWidth)
@@ -275,9 +277,12 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 40
 					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
-					if (dataUsers[i].count >= 400) {
-						showPrize(dataUsers[i].name)
-					}
+					delay(1000).then(() => {
+						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
+						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
+							showPrize(dataUsers[i].name)
+						}
+					})
 				}
 			}
 			console.log('Левая девятка')
@@ -289,9 +294,12 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 40
 					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
-					if (dataUsers[i].count >= 400) {
-						showPrize(dataUsers[i].name)
-					}
+					delay(1000).then(() => {
+						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
+						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
+							showPrize(dataUsers[i].name)
+						}
+					})
 				}
 			}
 			console.log('Правая девятка')
@@ -301,9 +309,12 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 20
 					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
-					if (dataUsers[i].count >= 400) {
-						showPrize(dataUsers[i].name)
-					}
+					delay(1000).then(() => {
+						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
+						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
+							showPrize(dataUsers[i].name)
+						}
+					})
 				}
 			}
 			console.log('goal')

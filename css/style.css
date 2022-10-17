@@ -89,7 +89,7 @@ body {
 	background: transparent;
 	position: fixed;
 	padding: 50px 200px;
-	transform: translateY(-20%) scale(0%);
+	transform:  translateY(-20%) scale(0%) ;
 	transition: 0.3s cubic-bezier(0.61, 1, 0.88, 1);
 	opacity: 0;
 }
@@ -198,10 +198,11 @@ body {
 	-webkit-user-select: none;
 	-moz-user-select: none; 
 }
-.prize__item {
-	width: 80px;
-	height: 80px;
-	background: black;
+.prize__item img {
+	width: 90%;
+}
+.prize__item img::selection {
+	background: transparent;
 }
 .start {
 	margin:10px 10px 10px 0;
@@ -257,20 +258,16 @@ body {
 	left: 30.8%;
 	width: 41.55%;
 	padding: 0 0 21.8% 0;
-	background: red;
-	opacity: 0.5;
 }
 .left-angle {
 	position: absolute;
 	width: 20%;
 	padding: 0 0 20% 0;
-	background: green;
 }
 .right-angle {
 	position: absolute;
 	width: 20%;
 	padding: 0 0 20% 0;
-	background: green;
 	right: 0;
 }
 .ball	{
