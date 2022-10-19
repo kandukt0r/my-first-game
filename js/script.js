@@ -15,6 +15,8 @@ const $rightAngle = document.querySelector('.right-angle')
 const $popUp = document.querySelector('.pop_up_container')
 const $closePopUp = document.querySelector('.pop_up_cross')
 const $prize = document.querySelector('.prize')
+const $goalScored = document.querySelector('.goal_container')
+const $closeGoalScore = document.querySelector('.goal_button')
 
 let gameStarted // button 'startButton' not pressed
 let formReady // button 'fillButton' not pressed
@@ -23,6 +25,8 @@ let tooltip // tooltip not show
 let pass // move not passed
 let enteredNames = [] // entered names in input for color bars
 let turn // need for pass move
+let goal
+let goalInTheTopNine
 
 //players data (данные игроков)--------------------------------------
 const firstUser = {
@@ -260,6 +264,23 @@ function ballFly() {
 	delay(650).then(() => checkCoordsForGoal($ball, $gate, $leftAngle, $rightAngle))
 }
 
+function showModalGoal(goal, goalInTheTopNine) {
+	if (goal) {
+		$goalScored.classList.add('goal-scored')
+		const $ballFlyInModal = $goalScored.querySelector('.goal_ball_animation')
+		delay(500).then(() => $ballFlyInModal.classList.add('goal_ball_animation_ballfly'))
+		return
+	}
+	if (goalInTheTopNine) {
+
+	}
+}
+$closeGoalScore.addEventListener('click', function () {
+	$goalScored.classList.remove('goal-scored')
+	const $ballFlyInModal = $goalScored.querySelector('.goal_ball_animation')
+	$ballFlyInModal.classList.remove('goal_ball_animation_ballfly')
+})
+
 function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 	const cBall = ball.getBoundingClientRect()
 	const cGate = gate.getBoundingClientRect()
@@ -273,6 +294,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 		if (cBall.left > cLeftAngle.left && cBall.top > cLeftAngle.top
 			&& ((cBall.left + ball.offsetWidth) < (cLeftAngle.left + leftAngle.offsetWidth))
 			&& ((cBall.top + ball.offsetHeight) < (cLeftAngle.top + leftAngle.offsetHeight))) {
+			goalInTheTopNine = true
 			for (let i = 0; i < dataUsers.length; i++) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 40
@@ -286,10 +308,12 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 				}
 			}
 			console.log('Левая девятка')
+			goalInTheTopNine = false
 		}
 		else if (cBall.left > cRightAngle.left && cBall.top > cRightAngle.top
 			&& ((cBall.left + ball.offsetWidth) < (cRightAngle.left + rightAngle.offsetWidth))
 			&& ((cBall.top + ball.offsetHeight) < (cRightAngle.top + rightAngle.offsetHeight))) {
+			goalInTheTopNine = true
 			for (let i = 0; i < dataUsers.length; i++) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 40
@@ -303,8 +327,10 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 				}
 			}
 			console.log('Правая девятка')
+			goalInTheTopNine = false
 		}
 		else {
+			goal = true
 			for (let i = 0; i < dataUsers.length; i++) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
 					dataUsers[i].count += 20
@@ -317,7 +343,8 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					})
 				}
 			}
-			console.log('goal')
+			showModalGoal(goal, goalInTheTopNine)
+			goal = false
 		}
 	}
 }
