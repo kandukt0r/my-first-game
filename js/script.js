@@ -28,6 +28,16 @@ let turn // need for pass move
 let goal
 let goalInTheTopNine
 
+const hittingTheBallAudio1 = new Audio('../audio/1.mp3')
+const hittingTheBallAudio2 = new Audio('../audio/2.mp3')
+const hittingTheBallAudio3 = new Audio('../audio/3.mp3')
+const hittingTheBallAudio4 = new Audio('../audio/4.mp3')
+const arrHittingTheBallAudio = [hittingTheBallAudio1, hittingTheBallAudio2, hittingTheBallAudio3, hittingTheBallAudio4]
+
+const fansSounds1 = new Audio('../audio/5.mp3')
+const fansSounds2 = new Audio('../audio/6.mp3')
+const fansSounds3 = new Audio('../audio/7.mp3')
+const arrFansSounds = [fansSounds1, fansSounds2, fansSounds3]
 //players data (данные игроков)--------------------------------------
 const firstUser = {
 	name: '',
@@ -245,32 +255,42 @@ function animate(options) {
 // event click "startButton" (кнопка "начать игру")------------------
 
 // random shot in gates (рандомный удар по воротам)------------------
-function randomCoordsTop(min, max) {
+function random(min, max) {
 	return min + Math.random() * (max - min);
 }
-function randomCoordsLeft(min, max) {
-	return min + Math.random() * (max - min)
-}
+
 
 $ball.addEventListener('click', ballFly)
 
 function ballFly() {
 	if (!gameStarted) return
 	if (this.style.top !== '90%') return
+	arrHittingTheBallAudio[Math.floor(random(0, 3))].play()
 	this.classList.add('ballfly')
-	this.style.top = randomCoordsTop(15, 55) + '%'
-	this.style.left = randomCoordsLeft(25, 75) + '%'
+	this.style.top = random(15, 55) + '%'
+	this.style.left = random(25, 75) + '%'
 	pass = true
 	delay(650).then(() => checkCoordsForGoal($ball, $gate, $leftAngle, $rightAngle))
 }
 
+const strGoal = 'ГОООООООООООЛ!!!'
+const strGoalInTheTop = 'ДЕВЯЯЯЯЯЯЯТКА!!!'
+const modalGoalTitle = $goalScored.querySelector('.goal_title')
+const pointsX3 = $goalScored.querySelector('.goal_x3')
+
 function showModalGoal(goal, goalInTheTopNine) {
+	arrFansSounds[Math.floor(random(0, 2))].play()
 	if (goal) {
 		$goalScored.classList.add('goal-scored')
+		modalGoalTitle.textContent = strGoal
+		pointsX3.style.display = 'none'
 		return
 	}
 	if (goalInTheTopNine) {
-
+		$goalScored.classList.add('goal-scored')
+		modalGoalTitle.textContent = strGoalInTheTop
+		pointsX3.style.display = 'block'
+		return
 	}
 }
 $closeGoalScore.addEventListener('click', function () {
@@ -295,7 +315,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 			goalInTheTopNine = true
 			for (let i = 0; i < dataUsers.length; i++) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
-					dataUsers[i].count += 40
+					dataUsers[i].count += 60
 					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
 					delay(1000).then(() => {
 						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
@@ -305,7 +325,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					})
 				}
 			}
-			console.log('Левая девятка')
+			showModalGoal(goal, goalInTheTopNine)
 			goalInTheTopNine = false
 		}
 		else if (cBall.left > cRightAngle.left && cBall.top > cRightAngle.top
@@ -314,7 +334,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 			goalInTheTopNine = true
 			for (let i = 0; i < dataUsers.length; i++) {
 				if ($gamersLinesColor[i].classList.contains('highlite')) {
-					dataUsers[i].count += 40
+					dataUsers[i].count += 60
 					$gamersLinesColor[i].style.width = dataUsers[i].count + '%'
 					delay(1000).then(() => {
 						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
@@ -324,7 +344,7 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					})
 				}
 			}
-			console.log('Правая девятка')
+			showModalGoal(goal, goalInTheTopNine)
 			goalInTheTopNine = false
 		}
 		else {
@@ -402,7 +422,7 @@ function highliteNextPlayer(elem) {
 // pass the move (передать ход)--------------------------------------
 
 //animation firework-------------------------------------------------
-var gl = c.getContext('webgl', { preserveDrawingBuffer: true })
+let gl = c.getContext('webgl', { preserveDrawingBuffer: true })
 	, w = c.width = window.innerWidth
 	, h = c.height = window.innerHeight
 
@@ -516,14 +536,14 @@ webgl.draw = function (glType) {
 	gl.drawArrays(glType, 0, webgl.data.length / 4);
 }
 
-var fireworks = []
+let fireworks = []
 	, tick = 0
 	, sins = []
 	, coss = []
 	, maxShardsParFirework = opts.baseShardsParFirework + opts.addedShardsParFirework
 	, tau = 6.283185307179586476925286766559;
 
-for (var i = 0; i < maxShardsParFirework; ++i) {
+for (let i = 0; i < maxShardsParFirework; ++i) {
 	sins[i] = Math.sin(tau * i / maxShardsParFirework);
 	coss[i] = Math.cos(tau * i / maxShardsParFirework);
 }
@@ -531,12 +551,12 @@ for (var i = 0; i < maxShardsParFirework; ++i) {
 function Firework() {
 	this.reset();
 	this.shards = [];
-	for (var i = 0; i < maxShardsParFirework; ++i)
+	for (let i = 0; i < maxShardsParFirework; ++i)
 		this.shards.push(new Shard(this));
 }
 Firework.prototype.reset = function () {
 
-	var angle = -Math.PI / 2 + (Math.random() - .5) * opts.fireworkAngleSpan
+	let angle = -Math.PI / 2 + (Math.random() - .5) * opts.fireworkAngleSpan
 		, vel = opts.baseFireworkVel + opts.addedFireworkVel * Math.random();
 
 	this.mode = 0;
@@ -553,7 +573,7 @@ Firework.prototype.step = function () {
 
 	if (this.mode === 0) {
 
-		var ph = this.hue
+		let ph = this.hue
 			, px = this.x
 			, py = this.y;
 
@@ -571,17 +591,17 @@ Firework.prototype.step = function () {
 
 			this.shardAmount = opts.baseShardsParFirework + opts.addedShardsParFirework * Math.random() | 0;
 
-			var baseAngle = Math.random() * tau
+			let baseAngle = Math.random() * tau
 				, x = Math.cos(baseAngle)
 				, y = Math.sin(baseAngle)
 				, sin = sins[this.shardAmount]
 				, cos = coss[this.shardAmount];
 
-			for (var i = 0; i < this.shardAmount; ++i) {
+			for (let i = 0; i < this.shardAmount; ++i) {
 
-				var vel = opts.baseShardVel + opts.addedShardVel * Math.random();
+				let vel = opts.baseShardVel + opts.addedShardVel * Math.random();
 				this.shards[i].reset(x * vel, y * vel)
-				var X = x;
+				let X = x;
 				x = x * cos - y * sin;
 				y = y * cos + X * sin;
 			}
@@ -592,9 +612,9 @@ Firework.prototype.step = function () {
 		this.ph = this.hue
 		this.hue += opts.runHueAdder;
 
-		var allDead = true;
-		for (var i = 0; i < this.shardAmount; ++i) {
-			var shard = this.shards[i];
+		let allDead = true;
+		for (let i = 0; i < this.shardAmount; ++i) {
+			let shard = this.shards[i];
 			if (!shard.dead) {
 				shard.step();
 				allDead = false;
@@ -622,13 +642,13 @@ Shard.prototype.step = function () {
 
 	this.tick += .05;
 
-	var px = this.x
+	let px = this.x
 		, py = this.y;
 
 	this.x += this.vx *= opts.xFriction;
 	this.y += this.vy += opts.gravity;
 
-	var proportion = 1 - (this.y - this.starty) / (h - this.starty);
+	let proportion = 1 - (this.y - this.starty) / (h - this.starty);
 
 	webgl.data.push(
 		px, py, this.parent.ph, opts.projectileAlpha / this.tick,
@@ -664,7 +684,7 @@ window.addEventListener('resize', function () {
 	gl.uniform2f(webgl.resUniformLoc, w, h);
 })
 window.addEventListener('click', function (e) {
-	var firework = new Firework();
+	let firework = new Firework();
 	firework.x = e.clientX;
 	firework.y = e.clientY;
 	firework.vx = 0;
