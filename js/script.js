@@ -17,6 +17,7 @@ const $closePopUp = document.querySelector('.pop_up_cross')
 const $prize = document.querySelector('.prize')
 const $goalScored = document.querySelector('.goal_container')
 const $closeGoalScore = document.querySelector('.goal_button')
+const $ballFlyInModal = document.querySelector('.goal_ball_animation')
 
 let gameStarted // button 'startButton' not pressed
 let formReady // button 'fillButton' not pressed
@@ -63,6 +64,15 @@ const dataUsers = [firstUser, secondUser, thirdUser, fourthUser, fifthUser]
 
 // players data (данные игроков)-------------------------------------
 // variables (переменные)--------------------------------------------
+// global function (глобальные функции)------------------------------
+async function delay(ms) {
+	await new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function random(min, max) {
+	return min + Math.random() * (max - min);
+}
+// global function (глобальные функции)------------------------------
 // tooltip (подсказка)-----------------------------------------------
 document.addEventListener('mouseover', function (event) {
 	if (tooltip) return
@@ -112,9 +122,12 @@ document.addEventListener('mouseout', function () {
 
 // pop up (всплывающее окно)-----------------------------------------
 delay(1000).then(() => $popUp.classList.add('active'))
+
 document.addEventListener('click', function (e) {
 	if (e.target.closest('.pop_up_body')) return
+	if (e.target.closest('.goal_body')) return
 	$popUp.classList.remove('active')
+	$goalScored.classList.remove('goal-scored')
 })
 
 $closePopUp.addEventListener('click', function () {
@@ -255,10 +268,6 @@ function animate(options) {
 // event click "startButton" (кнопка "начать игру")------------------
 
 // random shot in gates (рандомный удар по воротам)------------------
-function random(min, max) {
-	return min + Math.random() * (max - min);
-}
-
 
 $ball.addEventListener('click', ballFly)
 
@@ -279,15 +288,15 @@ const modalGoalTitle = $goalScored.querySelector('.goal_title')
 const pointsX3 = $goalScored.querySelector('.goal_x3')
 
 function showModalGoal(goal, goalInTheTopNine) {
+	$goalScored.classList.add('goal-scored')
+	ballFlyInModal()
 	arrFansSounds[Math.floor(random(0, 2))].play()
 	if (goal) {
-		$goalScored.classList.add('goal-scored')
 		modalGoalTitle.textContent = strGoal
 		pointsX3.style.display = 'none'
 		return
 	}
 	if (goalInTheTopNine) {
-		$goalScored.classList.add('goal-scored')
 		modalGoalTitle.textContent = strGoalInTheTop
 		pointsX3.style.display = 'block'
 		return
@@ -295,9 +304,10 @@ function showModalGoal(goal, goalInTheTopNine) {
 }
 $closeGoalScore.addEventListener('click', function () {
 	$goalScored.classList.remove('goal-scored')
-	const $ballFlyInModal = $goalScored.querySelector('.goal_ball_animation')
-	$ballFlyInModal.classList.remove('goal_ball_animation_ballfly')
 })
+function ballFlyInModal() {
+	$ballFlyInModal.style.top = $ballFlyInModal.style.left = 15 + '%'
+}
 
 function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 	const cBall = ball.getBoundingClientRect()
@@ -396,10 +406,6 @@ function putBallBack() {
 			$ball.style.top = progress * 90 + '%';
 		}
 	})
-}
-
-async function delay(ms) {
-	await new Promise(resolve => setTimeout(resolve, ms))
 }
 
 // give highlite for next player (передать подсветку)----------------
