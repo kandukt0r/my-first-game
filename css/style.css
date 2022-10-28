@@ -187,15 +187,34 @@ body {
 	height: 100%;
 	background-color: #111;
 }
+.goal_box_for_ball {
+width: 100%;
+height: 80%;
+position: absolute;
+top: 30%;
+left: 15%;
+}
 .goal_ball_animation {
+	position: absolute;
 	height: 15%;
 	z-index: 3;
-	position: absolute;
-	top: 100%;
-	left: 100%;
-	transition: 2s ease-out;
 	-webkit-filter: drop-shadow(3px 5px 5px #000);
 	filter: drop-shadow(0px 5px 5px #000);
+}
+.goal_ball_animation.start_animation {
+	offset-path: path('M1189.28 558.312C1001.18 -11.4547 586.612 -92.9735 0.736363 84.1606');
+	animation: move 1.5s ease-out normal 1 0.3s forwards;
+}
+@keyframes move {
+	0%{
+		height: 5%;
+		transform: rotate(0deg);
+	}
+	100%{
+		height: 25%;
+		offset-distance: 100%;
+		transform: rotate(1500deg);
+	}
 }
 .goal_ball_animation img {
 	width: 100%;

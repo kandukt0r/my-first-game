@@ -128,6 +128,7 @@ document.addEventListener('click', function (e) {
 	if (e.target.closest('.goal_body')) return
 	$popUp.classList.remove('active')
 	$goalScored.classList.remove('goal-scored')
+	$ballFlyInModal.classList.remove('start_animation')
 })
 
 $closePopUp.addEventListener('click', function () {
@@ -288,8 +289,8 @@ const modalGoalTitle = $goalScored.querySelector('.goal_title')
 const pointsX3 = $goalScored.querySelector('.goal_x3')
 
 function showModalGoal(goal, goalInTheTopNine) {
+	startAnimationBallInModal()
 	$goalScored.classList.add('goal-scored')
-	ballFlyInModal()
 	arrFansSounds[Math.floor(random(0, 2))].play()
 	if (goal) {
 		modalGoalTitle.textContent = strGoal
@@ -304,9 +305,11 @@ function showModalGoal(goal, goalInTheTopNine) {
 }
 $closeGoalScore.addEventListener('click', function () {
 	$goalScored.classList.remove('goal-scored')
+	$ballFlyInModal.classList.remove('start_animation')
 })
-function ballFlyInModal() {
-	$ballFlyInModal.style.top = $ballFlyInModal.style.left = 15 + '%'
+
+function startAnimationBallInModal() {
+	$ballFlyInModal.classList.add('start_animation')
 }
 
 function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
