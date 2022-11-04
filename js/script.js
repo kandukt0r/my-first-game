@@ -18,6 +18,7 @@ const $prize = document.querySelector('.prize')
 const $goalScored = document.querySelector('.goal_container')
 const $closeGoalScore = document.querySelector('.goal_button')
 const $ballFlyInModal = document.querySelector('.goal_ball_animation')
+const $showWinnerModal = document.querySelector('.show_winner')
 
 let gameStarted // button 'startButton' not pressed
 let formReady // button 'fillButton' not pressed
@@ -28,6 +29,8 @@ let enteredNames = [] // entered names in input for color bars
 let turn // need for pass move
 let goal
 let goalInTheTopNine
+let gameOwer
+let winner
 
 const hittingTheBallAudio1 = new Audio('../audio/1.mp3')
 const hittingTheBallAudio2 = new Audio('../audio/2.mp3')
@@ -129,6 +132,7 @@ document.addEventListener('click', function (e) {
 	$popUp.classList.remove('active')
 	$goalScored.classList.remove('goal-scored')
 	$ballFlyInModal.classList.remove('start_animation')
+	showPrize(winner)
 })
 
 $closePopUp.addEventListener('click', function () {
@@ -306,6 +310,7 @@ function showModalGoal(goal, goalInTheTopNine) {
 $closeGoalScore.addEventListener('click', function () {
 	$goalScored.classList.remove('goal-scored')
 	$ballFlyInModal.classList.remove('start_animation')
+	showPrize(winner)
 })
 
 function startAnimationBallInModal() {
@@ -333,7 +338,9 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					delay(1000).then(() => {
 						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
 						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
-							showPrize(dataUsers[i].name)
+							gameOwer = true
+							winner = dataUsers[i].name
+							return
 						}
 					})
 				}
@@ -352,7 +359,9 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					delay(1000).then(() => {
 						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
 						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
-							showPrize(dataUsers[i].name)
+							gameOwer = true
+							winner = dataUsers[i].name
+							return
 						}
 					})
 				}
@@ -369,7 +378,9 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 					delay(1000).then(() => {
 						const coordsUserLine = $gamersLinesColor[i].getBoundingClientRect()
 						if (coordsUserLine.left + $gamersLinesColor[i].offsetWidth >= coordsPrize.left) {
-							showPrize(dataUsers[i].name)
+							gameOwer = true
+							winner = dataUsers[i].name
+							return
 						}
 					})
 				}
@@ -380,9 +391,34 @@ function checkCoordsForGoal(ball, gate, leftAngle, rightAngle) {
 	}
 }
 
-function showPrize(winer) {
-	alert(`${winer} win`)
+function showPrize(winner) {
+	if (!gameOwer) return
+	$showWinnerModal.classList.add('show_window')
+	const $winnerTitle = $showWinnerModal.querySelector('.show_winner_title')
+	$winnerTitle.innerHTML = `<span class="winner_name">${winner}</span> победил!`
+	const $btnEndGame = $showWinnerModal.querySelector('.show_winner_button')
+	const $containerPrize = $showWinnerModal.querySelector('.show_winner_prize')
+	const $btnPrize = $showWinnerModal.querySelector('.show_winner_prize img')
+	const header = document.querySelector('.header__progress').children
+	for (let elem of header) {
+		elem.style.opacity = 0
+	}
+
+	$btnPrize.addEventListener('click', swipeImg, { once: true })
+
+	function swipeImg(e) {
+		e.target.hidden = true
+		const cup = document.createElement('img')
+		cup.src = 'img/cup.png'
+		$containerPrize.append(cup)
+		cup.classList.add('show_winner_cup')
+		$btnEndGame.classList.add('unlock')
+		$btnEndGame.addEventListener('click', () => {
+			location.reload()
+		})
+	}
 }
+
 // random shot in gates (рандомный удар по воротам)------------------
 
 // pass the move (передать ход)--------------------------------------

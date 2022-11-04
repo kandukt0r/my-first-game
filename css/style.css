@@ -82,7 +82,7 @@ body {
 }
 .pop_up_container {
 	font-family: 'Nunito', sans-serif;
-	color: #212020;
+	color: black;
 	height: 100%;
 	width: 100%;
 	z-index: 2;
@@ -99,7 +99,7 @@ body {
 	opacity: 1;
 }
 .pop_up_body {
-	background:linear-gradient(135deg, rgba(255,145,0,1) 0%, rgba(255,235,0,1) 100%);
+	background:rgba(249, 249, 249, 1);
 	height: 100%;
 	padding: 40px;
 	border-radius: 1px;
@@ -236,7 +236,88 @@ left: 15%;
 	background: rgba(255, 221, 45, 0.6);
 	color: rgba(0,0,0,.8)
 }
-
+.show_winner{
+	color: #212020;
+	height: 100%;
+	width: 100%;
+	z-index: 2;
+	background: transparent;
+	position: fixed;
+	padding: 50px 200px;
+	transform:  scale(0);
+	transition: 0.7s cubic-bezier(0.61, 1, 0.88, 1);
+	opacity: 0;
+	padding: 3% 20%;
+}
+.show_winner.show_window {
+	animation: show-modal-winner 0.7s ease-out normal 1 0.3s forwards;
+}
+@keyframes show-modal-winner {
+	100%{
+		transform: scale(1);
+		background: rgba(0, 0, 0, 0.8);
+		opacity: 1;
+	}
+}
+.show_winner_body {
+	background: #ffdd2d;
+	border-radius: 2px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	padding: 3%;
+}
+.show_winner_title {
+	font-size: 4rem;
+	color: #111;
+}
+.show_winner_prize {
+	height: 30%;
+	cursor: pointer;
+}
+.show_winner_prize img {
+	height: 100%;
+}
+.show_winner_cup {
+	transform: scale(0);
+	-webkit-filter: drop-shadow(3px 5px 5px #000);
+	filter: drop-shadow(0px 5px 5px #000);
+	animation: cup-animation 2s ease-out normal 1 0.3s forwards;
+}
+@keyframes cup-animation {
+	100%{
+		transform: scale(1) rotateY(1080deg);
+	}
+}
+.show_winner_button {
+	cursor: pointer;
+	padding: 15px;
+	background: rgba(245, 71, 39, 0.1);
+	color: #111;
+	border-radius: 3px;
+	font-size: 2rem;
+	opacity: 0;
+	user-select: none;
+	transition: 0.2s ease-out;
+}
+.show_winner_button:hover {
+	background: rgba(245, 71, 39, 1)
+}
+.show_winner_button.unlock {
+	animation: unlock 1s ease-out normal 1 0.5s forwards;
+}
+@keyframes unlock {
+	100% {
+		opacity: 1;
+		user-select: auto;
+	}
+}
+.winner_name {
+	color: red;
+	font-size: 1.5em;
+}
 /*--------------WRAPPER-----------------*/
 
 .wrapper {
@@ -260,6 +341,7 @@ left: 15%;
 	padding:8px;
 	background-color:#fff;
 	box-shadow: 0 6px 10px 0 rgb(38 55 70 / 30%);
+	position: relative;
 }
 .header__score {
 	padding: 5px 0;
@@ -308,8 +390,13 @@ left: 15%;
 	-webkit-user-select: none;
 	-moz-user-select: none; 
 }
+.prize__item {
+	width: 80%;
+	margin: auto;
+}
 .prize__item img {
-	width: 90%;
+	width: 100%;
+	height: 100%;
 }
 .prize__item img::selection {
 	background: transparent;
@@ -326,9 +413,11 @@ left: 15%;
 	-moz-user-select: none;
 }
 .start:not([disabled]):hover {
+	color: #ffdd2d;
 	background: #ababa9;
 }
 .start:not([disabled]):active {
+	color: #ffdd2d;
 	transform: scale(0.97);
 	background:#999999;
 	transition: 0.1s;
@@ -364,9 +453,9 @@ left: 15%;
 }
 .gates {
 	position: absolute;
-	top: 25%;
-	left: 30.8%;
-	width: 41.55%;
+	top: 24.7%;
+	left: 30.6%;
+	width: 42%;
 	padding: 0 0 21.8% 0;
 }
 .left-angle {
@@ -411,7 +500,7 @@ left: 15%;
 		padding: 0 0 50% 0;
 	}
 	.gates {
-		top: 23.1%;
+		top: 22.5%;
 	}
 }
 @media (max-height:570px) {
@@ -419,7 +508,7 @@ left: 15%;
 		padding:0 0 45% 0 ;
 	}
 	.gates {
-		top: 19.9%;
+		top: 19.5%;
 	}
 	.pop_up_body p {
 		margin: 0 0 20px 0;
@@ -505,11 +594,13 @@ left: 15%;
 }
 .button:not([disabled]):hover,.next-player:hover {
 	background: #ababa9;
+	color: #ffdd2d;
 }
 .button:not([disabled]):active,.next-player:active {
 	background:#999999;
 	transition: 0.1s;
 	transform: scale(0.99);
+	color: #ffdd2d;
 }
 @media (max-width: 1410px) {
 	.players > li > input {
@@ -551,4 +642,4 @@ left: 15%;
 		font-size: 10px
 	}
 }
----------------tooltip------------------
+/*---------------tooltip------------------*/
